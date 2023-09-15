@@ -1,8 +1,7 @@
-import 'dart:ui';
 import 'dart:typed_data';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
-
 import 'package:flutter_advanced_networkimage_2/provider.dart';
 import 'package:flutter_advanced_networkimage_2/src/utils.dart';
 
@@ -218,6 +217,7 @@ enum _TransitionStatus {
   completed,
   failed,
 }
+
 enum TransitionType {
   slide,
   fade,
@@ -245,7 +245,8 @@ class _TransitionToImageState extends State<TransitionToImage>
     _controller = AnimationController(vsync: this, duration: widget.duration)
       ..addListener(() => setState(() {}));
     if (widget.transitionType == TransitionType.fade) {
-      _fadeTween = widget.tween as Tween<double>? ?? Tween(begin: 0.0, end: 1.0);
+      _fadeTween =
+          widget.tween as Tween<double>? ?? Tween(begin: 0.0, end: 1.0);
     } else if (widget.transitionType == TransitionType.slide) {
       _slideTween = widget.tween as Tween<Offset>? ??
           Tween(begin: const Offset(0.0, -1.0), end: Offset.zero);
@@ -357,7 +358,8 @@ class _TransitionToImageState extends State<TransitionToImage>
       if (widget.forceRebuildWidget) {
         if (widget.loadedCallback != null)
           widget.loadedCallback!();
-        else if (widget.loadFailedCallback != null) widget.loadFailedCallback!();
+        else if (widget.loadFailedCallback != null)
+          widget.loadFailedCallback!();
       }
       setState(() => _status = _TransitionStatus.completed);
     } else {
@@ -409,19 +411,21 @@ class _TransitionToImageState extends State<TransitionToImage>
                 : widget.loadingWidget
             : widget.transitionType == TransitionType.fade
                 ? FadeTransition(
-                    opacity: _fadeTween.animate(_animation as Animation<double>),
+                    opacity:
+                        _fadeTween.animate(_animation as Animation<double>),
                     child: widget.borderRadius != null
                         ? ClipRRect(
-                            borderRadius: widget.borderRadius,
+                            borderRadius: widget.borderRadius!,
                             child: buildRawImage(),
                           )
                         : buildRawImage(),
                   )
                 : SlideTransition(
-                    position: _slideTween.animate(_animation as Animation<double>),
+                    position:
+                        _slideTween.animate(_animation as Animation<double>),
                     child: widget.borderRadius != null
                         ? ClipRRect(
-                            borderRadius: widget.borderRadius,
+                            borderRadius: widget.borderRadius!,
                             child: buildRawImage(),
                           )
                         : buildRawImage(),
